@@ -1,0 +1,32 @@
+version: '2'
+services:
+  # master:
+    # image: lixiepeng/lxp:tweet
+    # command: /bin/bash ./run.sh
+    # environment:
+      # SCRIPT: master.py
+    # labels:
+      # io.rancher.scheduler.affinity:host_label spider.master:True
+      # io.rancher.container.pull_image: always
+
+  worker1:
+    image: lixiepeng/lxp:tweet
+    command: /bin/bash ./run.sh
+    environment:
+      SCRIPT: worker.py
+      MONGOHOST: 10.42.103.250
+      REDISHOST: 10.42.152.240
+    labels:
+      io.rancher.scheduler.affinity:host_label: spider=worker
+      io.rancher.container.pull_image: always
+  
+  # worker2:
+    # image: lixiepeng/lxp:tweet
+    # command: /bin/bash ./run.sh
+    # environment:
+      # SCRIPT: worker.py
+      # MONGOHOST: 10.42.103.250
+      # REDISHOST: 10.42.152.240
+    # labels:
+      # io.rancher.scheduler.affinity:host_label: spider=master
+      # io.rancher.container.pull_image: always

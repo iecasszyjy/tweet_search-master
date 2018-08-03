@@ -1,0 +1,23 @@
+version: '2'
+services:
+  master-paper:
+    image: lixiepeng/lxp:tweet
+    command: /bin/bash ./run.sh
+    environment:
+      SCRIPT: ce_master_paper.py
+      MONGOHOST: 10.42.32.122
+      REDISHOST: 10.42.214.43
+    labels:
+      io.rancher.scheduler.affinity:host_label: spider=master
+      io.rancher.container.pull_image: always
+
+  worker-paper:
+    image: lixiepeng/lxp:tweet
+    command: /bin/bash ./run.sh
+    environment:
+      SCRIPT: ce_worker_paper.py
+      MONGOHOST: 10.42.32.122
+      REDISHOST: 10.42.214.43
+    labels:
+      io.rancher.scheduler.affinity:host_label: spider=worker
+      io.rancher.container.pull_image: always
