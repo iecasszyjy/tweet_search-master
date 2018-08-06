@@ -8,4 +8,4 @@ RUN apt-get install -y libxml2-dev libxslt-dev python-dev zlib1g-dev
 WORKDIR /work/tweet_search/spider
 RUN pip install -r requirements.txt
 
-CMD ["git", "pull"]#, "&&", "python2", "worker.py"]
+CMD ["git", "pull"]#, "&&", "python", "worker.py"]
