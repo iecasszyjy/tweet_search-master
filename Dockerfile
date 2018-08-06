@@ -4,7 +4,7 @@ WORKDIR /work
 
 RUN git clone https://github.com/iecasszyjy/tweet_search-master.git
 RUN apt-get update 
-RUN apt-get install -y libxml2-dev libxslt-dev python2-dev zlib1g-dev
+RUN apt-get install -y libxml2-dev libxslt-dev python-dev zlib1g-dev
 WORKDIR /work/tweet_search/spider
 RUN pip install -r requirements.txt
 
