@@ -10,7 +10,7 @@ got, db, r = get_noau_config()
 
 def advance_search_dataset(q, f, num, event_id):
     print "flag2"
-    _, db, _ = get_config()
+    # _, db, _ = get_config()
     collection = db.dataset_
     print "flag3"
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(q).setTweetType(f).setMaxTweets(num)
@@ -32,11 +32,13 @@ def run_dataset_task(message_data):
         event_id = message_data['event_id']
         print "flag1"
         if type(message_data['f']) != list:
+            print "flagif"
             advance_search_dataset(q, message_data['f'], num, event_id)
         else:
+            print "flagelse"
             pool = Pool(processes=multiprocessing.cpu_count())
-            # [pool.apply_async(advance_search_dataset,(q,f,num,event_id)) for f in message_data['f']]
-            [pool.apply(advance_search_dataset, (q, f, num, event_id)) for f in message_data['f']]
+            [pool.apply_async(advance_search_dataset,(q,f,num,event_id)) for f in message_data['f']]
+            # [pool.apply(advance_search_dataset, (q, f, num, event_id)) for f in message_data['f']]
             pool.close()
             pool.join()
         print "flag6"
