@@ -9,6 +9,7 @@ from Config_new import get_noau_config
 got, db, r = get_noau_config()
 
 def advance_search_dataset(q, f, num, event_id):
+    # _, db, _ = get_config()
     collection = db.dataset_
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(q).setTweetType(f).setMaxTweets(num)
     tweets = got.manager.TweetManager.getTweets(tweetCriteria)
@@ -51,3 +52,7 @@ if __name__ == '__main__':
                 db.dataset_log.insert_one({'message': json.loads(queue), 'status': 0})
         time.sleep(1)
         print 'craw_worker wait!'
+
+        
+        
+        
