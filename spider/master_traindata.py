@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*
 import json
 from Config_new import get_noau_config
 
