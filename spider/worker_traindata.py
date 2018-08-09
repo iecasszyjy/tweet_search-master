@@ -10,8 +10,7 @@ got, db, r = get_noau_config()
 
 def advance_search_dataset(q, f, num, event_id):
     print "flag2"
-    # _, db, _ = get_config()
-    collection = db.dataset_
+    collection = db.dataset
     print "flag3"
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(q).setTweetType(f).setMaxTweets(num)
     print "flag4"
@@ -50,7 +49,7 @@ def run_dataset_task(message_data):
 if __name__ == '__main__':
     print 'craw_worker start!'
     while True:
-        queue = r.lpop('task:dataset')
+        queue = r.lpop('task:traindata')
         if queue:
             print 'craw_worker process!'
             craw = run_dataset_task(json.loads(queue))
