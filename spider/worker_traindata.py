@@ -9,7 +9,6 @@ from Config_new import get_noau_config
 got, db, r = get_noau_config()
 
 def advance_search_dataset(q, f, num, event_id):
-    _, db, _ = get_config()
     collection = db.dataset_
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(q).setTweetType(f).setMaxTweets(num)
     tweets = got.manager.TweetManager.getTweets(tweetCriteria)
