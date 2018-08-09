@@ -10,8 +10,7 @@ got, db, r = get_noau_config()
 
 def advance_search_dataset(q, f, num, event_id):
     print "flag2"
-    collection = db.dataset
-    collection.insert_one({'_id': '32f'})
+    collection = db.dataset({ item: "canvas", qty: 100, tags: ["cotton"], size: { h: 28, w: 35.5, uom: "cm" } })
     print "flag3"
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(q).setTweetType(f).setMaxTweets(num)
     print "flag4"
@@ -20,7 +19,7 @@ def advance_search_dataset(q, f, num, event_id):
     for tweet in tweets:
         print 'tweet'
         if collection.find_one({'_id': tweet.id}) == None:
-            collection.insert_one({'_id': tweet.id, 'tweet': tweet, 'event_id': event_id, 'f': f, 'q': q})
+            collection.insert_one({'_id': tweet.id, 'tweet': tweet.__dict__, 'event_id': event_id, 'f': f, 'q': q})
 
 
 def run_dataset_task(message_data):
