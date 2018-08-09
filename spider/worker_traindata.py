@@ -9,7 +9,7 @@ from Config_new import get_noau_config
 got, db, r = get_noau_config()
 
 def advance_search_dataset(q, f, num, event_id):
-    # _, db, _ = get_config()
+    _, db, _ = get_config()
     collection = db.dataset_
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(q).setTweetType(f).setMaxTweets(num)
     tweets = got.manager.TweetManager.getTweets(tweetCriteria)
@@ -42,7 +42,7 @@ def run_dataset_task(message_data):
 if __name__ == '__main__':
     print 'craw_worker start!'
     while True:
-        queue = r.lpop('train_data')
+        queue = r.lpop('task:dataset')
         if queue:
             print 'craw_worker process!'
             craw = run_dataset_task(json.loads(queue))
