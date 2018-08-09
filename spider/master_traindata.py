@@ -20,7 +20,8 @@ def get_year(Year):
         Year_end = Year
     return Year_begin, Year_end
 
-def get_types(Type):
+def get_types(Disaster, Article):
+    Type = Disaster + ',' + Article
     Type = re.sub('[^a-zA-Z ,]', '', Type)
     Types = Type.split(',')
     Types = [i.strip() for i in Types]
@@ -28,20 +29,9 @@ def get_types(Type):
     Types = ['"' + i + '"' for i in Types if ' ' in i] + [i for i in Types if ' ' not in i]
     return list(set(Types))
 
-
-# def get_location(Location):
-#     Locations = Location.split(',')
-#     Locations = [i.strip() for i in Locations]
-#     return list(set(Locations))
-#
-# def get_disaster(Disaster):
-#     Disasters = Disaster.split(',')
-#     Disasters = [i.strip() for i in Disasters]
-#     return list(set(Disasters))
-
 def get_query_str(event):
     loc = get_location(event['event']['location'])
-    trigger = get_types(event['event']['disaster'])
+    trigger = get_types(event['event']['disaster'], event['event']['main_article'])
     year_begin, year_end = get_year(event['event']['year'])
     date_since = year_begin + '-01-01'
     date_until = year_end + '-12-31'
@@ -49,7 +39,7 @@ def get_query_str(event):
            ' ' + 'since:' + date_since + ' ' + 'until:' + date_until
 
 def get_task():
-    events = db.event_list.find({}, {'_id': 1, 'event.location': 1, 'event.disaster': 1, 'event.year': 1})[:20]
+    events = db.event_list.find({})[:20]
     for event in events:
         q = get_query_str(event)
         message = {'q': q, 'f': ['&f=news', '', '&f=tweets'], 'num': 100, 'event_id': event['_id']}
@@ -58,7 +48,5 @@ def get_task():
 
 if __name__ == '__main__':
     get_task()
-
-
 
 
