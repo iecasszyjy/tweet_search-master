@@ -39,7 +39,7 @@ def get_task():
         q = get_query_str(event)
         message = {'q': q, 'f': ['&f=news', '', '&f=tweets'], 'num': 100, 'event_id': event['_id']}
         print(message)
-        r.rpush('train_data', json.dumps(message))
+        r.rpush('task:dataset', json.dumps(message))
 
 if __name__ == '__main__':
     get_task()
