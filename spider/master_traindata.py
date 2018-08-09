@@ -22,7 +22,6 @@ def get_types(Disaster, Article):
     Type = Disaster + ',' + Article
     Types = Type.split(',')
     Types = [i.strip() for i in Types]
-    Types.append(Type)
     return list(set(Types))
 
 def get_query_str(event):
