@@ -10,10 +10,10 @@ def get_location(Location):
     return list(set(Locations))
 
 def get_year(Year):
-    try:
-        Year_begin = Year.split('–')[0]
-        Year_end = Year.split('–')[1]
-    except IndexError:
+    if len(Year) > 5:
+        Year_begin = 2013
+        Year_end = 2014
+    else:
         Year_begin = Year
         Year_end = Year
     return Year_begin, Year_end
