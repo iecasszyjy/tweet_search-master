@@ -9,10 +9,14 @@ from Config_new import get_noau_config
 got, db, r = get_noau_config()
 
 def advance_search_dataset(q, f, num, event_id):
+    print "flag2"
     _, db, _ = get_config()
     collection = db.dataset_
+    print "flag3"
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(q).setTweetType(f).setMaxTweets(num)
+    print "flag4"
     tweets = got.manager.TweetManager.getTweets(tweetCriteria)
+    print "flag5"
     for tweet in tweets:
         if collection.find_one({'_id': tweet.id}) == None:
             collection.insert_one({'_id': tweet.id, 'tweet': tweet.__dict__, 'event_id': event_id, 'f': f, 'q': q})
@@ -26,6 +30,7 @@ def run_dataset_task(message_data):
         q = message_data['q']
         num = message_data['num']
         event_id = message_data['event_id']
+        print "flag1"
         if type(message_data['f']) != list:
             advance_search_dataset(q, message_data['f'], num, event_id)
         else:
@@ -34,6 +39,7 @@ def run_dataset_task(message_data):
             [pool.apply(advance_search_dataset, (q, f, num, event_id)) for f in message_data['f']]
             pool.close()
             pool.join()
+        print "flag6"
         return True
     except:
         return False
