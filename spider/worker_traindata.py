@@ -22,7 +22,7 @@ def advance_search_dataset(q, f, num, event_id):
         print tweet['id']
         if collection.find_one({'_id': tweet['id']}) is None:
             print 'add'
-            collection.insert_one({'_id': tweet['id'], 'tweet': tweet.__dict__, 'event_id': event_id, 'f': f, 'q': q})
+            collection.insert_one({'_id': tweet['id'], 'tweet': tweet, 'event_id': event_id, 'f': f, 'q': q})
 
 
 def run_dataset_task(message_data):
