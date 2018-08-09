@@ -11,7 +11,7 @@ got, db, r = get_noau_config()
 def advance_search_dataset(q, f, num, event_id):
     print "flag2"
     collection = db.dataset
-    collection.insert_one({ item: "canvas", qty: 100, tags: ["cotton"], size: { h: 28, w: 35.5, uom: "cm" } })
+    collection.insert_one({"abc":"serbbbr"})
     print "flag3"
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(q).setTweetType(f).setMaxTweets(num)
     print "flag4"
