@@ -11,12 +11,14 @@ got, db, r = get_noau_config()
 def advance_search_dataset(q, f, num, event_id):
     print "flag2"
     collection = db.dataset
+    collection.insert_one({'_id': '32f'})
     print "flag3"
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(q).setTweetType(f).setMaxTweets(num)
     print "flag4"
     tweets = got.manager.TweetManager.getTweets(tweetCriteria)
-    print tweets
+    print tweets[0]
     for tweet in tweets:
+        print 'tweet'
         if collection.find_one({'_id': tweet.id}) == None:
             collection.insert_one({'_id': tweet.id, 'tweet': tweet, 'event_id': event_id, 'f': f, 'q': q})
 
