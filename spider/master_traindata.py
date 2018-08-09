@@ -11,8 +11,8 @@ def get_location(Location):
 
 def get_year(Year):
     if len(Year) > 5:
-        Year_begin = 2013
-        Year_end = 2014
+        Year_begin = '2013'
+        Year_end = '2014'
     else:
         Year_begin = Year
         Year_end = Year
