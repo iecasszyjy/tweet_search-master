@@ -15,7 +15,7 @@ def advance_search_dataset(q, f, num, event_id):
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(q).setTweetType(f).setMaxTweets(num)
     print "flag4"
     tweets = got.manager.TweetManager.getTweets(tweetCriteria)
-    print "flag5"
+    print tweets
     for tweet in tweets:
         if collection.find_one({'_id': tweet.id}) == None:
             collection.insert_one({'_id': tweet.id, 'tweet': tweet, 'event_id': event_id, 'f': f, 'q': q})
