@@ -1,21 +1,17 @@
 import json
-import re
 from Config_new import get_noau_config
 
 _, db, r = get_noau_config()
 
 def get_location(Location):
-    Location = re.sub('[^a-zA-Z ,]', '', Location)
     Locations = Location.split(',')
     Locations = [i.strip() for i in Locations]
-    Locations.append(Location)
-    Locations = ['"' + i + '"' for i in Locations if ' ' in i] + [i for i in Locations if ' ' not in i]
     return list(set(Locations))
 
 def get_year(Year):
     try:
-        Year_begin = Year.split('-')[0]
-        Year_end = Year.split('-')[1]
+        Year_begin = Year.split('–')[0]
+        Year_end = Year.split('–')[1]
     except IndexError:
         Year_begin = Year
         Year_end = Year
@@ -23,11 +19,9 @@ def get_year(Year):
 
 def get_types(Disaster, Article):
     Type = Disaster + ',' + Article
-    Type = re.sub('[^a-zA-Z ,]', '', Type)
     Types = Type.split(',')
     Types = [i.strip() for i in Types]
     Types.append(Type)
-    Types = ['"' + i + '"' for i in Types if ' ' in i] + [i for i in Types if ' ' not in i]
     return list(set(Types))
 
 def get_query_str(event):
@@ -49,5 +43,7 @@ def get_task():
 
 if __name__ == '__main__':
     get_task()
+
+
 
 
