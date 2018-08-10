@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+# 解析维基百科页面，提取事件关键词
 from bs4 import BeautifulSoup
 import requests
 
@@ -10,20 +11,21 @@ import random
 from pprint import pprint
 from tqdm import tqdm
 
-client = pymongo.MongoClient('54.161.160.206:27017')  # 与MongoDB数据库建立连接
+client = pymongo.MongoClient('54.161.160.206:27017')  # 与服务器上的MongoDB数据库建立连接
 db = client.natural_disaster
 
-url = "https://en.wikipedia.org/wiki/List_of_natural_disasters_in_the_United_States"  # 维基百科中列出的美国自然灾害
+url = "https://en.wikipedia.org/wiki/List_of_natural_disasters_in_the_United_States"  # 美国自然灾害事件列表网页
 header = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; ...) Gecko/20100101 Firefox/61.0',
 }
 
 def get_events_from_page(url):  # 从网页中提取事件信息
+    events = []  # 事件列表
     res = requests.get(url, headers=header, verify=False)
     soup = BeautifulSoup(res.text, 'lxml')
-    events = []  # 事件列表
 
-    tbody = soup.find_all('tbody')[-1]  # 网页解析过程需根据具体网页源代码格式决定
+    # 网页解析过程需根据具体网页源代码格式决定
+    tbody = soup.find_all('tbody')[-1]
     trs = tbody.find_all('tr')[1:]
 
     for tr in trs:
@@ -66,7 +68,7 @@ def get_events_from_page(url):  # 从网页中提取事件信息
 
 if __name__ == '__main__':
     events = get_events_from_page(url)
-    # 事件信息编码放入MongoDB数据库
+    # 事件信息放入MongoDB数据库
     requests_ = [InsertOne({'_id': hash(i['year'] + i['disaster'] + str(random.randint(0, 100))), 'event': i}) for i in tqdm(events)]
     try:
         result = db.event_list.bulk_write(requests_)
@@ -74,4 +76,6 @@ if __name__ == '__main__':
     except BulkWriteError as bwe:
         pprint(bwe.details)
     client.close()
+
+
 
