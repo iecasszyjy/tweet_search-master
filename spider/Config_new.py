@@ -14,7 +14,7 @@ def get_noau_config():
         import got3 as got
 
     # MongoDB数据库
-    client = pymongo.MongoClient(os.environ['MONGOHOST'], 27017)
+    client = pymongo.MongoClient(os.environ['MONGOHOST'], 27017, connect=False)
     db = client.natural_disaster
 
     # Redis数据库
