@@ -7,16 +7,16 @@ from datetime import datetime, timedelta
 _, db, r = get_noau_config()  # 数据库配置
 
 def get_query_str(event):  # 获取Twitter查询信息
-    loc_start = 'North Korea'
+    loc_start = 'North Korea OR North'
     loc_end = 'South Korea OR South'
-    trigger = "defect OR defected OR defection"
+    trigger = "defectors OR defected OR defection"
     type = event['event']['type']
     date = event['event']['date']
     temp = datetime.strptime(date, "%Y-%m-%d")
     date_since = (temp - timedelta(days=1)).strftime('%Y-%m-%d')
     date_until = (temp + timedelta(days=10)).strftime('%Y-%m-%d')
     # 注意查询格式必须形如(xxx OR xxx) (xxx OR xxx) since:xxxx-xx-xx until:xxxx-xx-xx
-    return '(' + loc_start + ')' + '(' + loc_end + ')' + ' ' + '(' + type + ')' + '(' + trigger + ')' +\
+    return '(' + loc_start + ')' + ' ' + '(' + loc_end + ')' + ' ' + '(' + type + ')' + ' ' + '(' + trigger + ')' +\
            ' ' + 'since:' + date_since + ' ' + 'until:' + date_until
 
 def get_task():
