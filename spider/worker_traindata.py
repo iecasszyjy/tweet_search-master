@@ -43,7 +43,7 @@ if __name__ == '__main__':
     print 'craw_worker start!'
     while True:
         # 从Redis数据库中取出获取推文所需信息
-        queue = r.lpop('positive')
+        queue = r.lpop('temp2')
         if queue:
             print 'craw_worker process!'
             craw = run_dataset_task(json.loads(queue))  # 获取推文
