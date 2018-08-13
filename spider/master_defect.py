@@ -9,7 +9,7 @@ _, db, r = get_noau_config()  # 数据库配置
 def get_query_str(event):  # 获取Twitter查询信息
     loc_start = 'North Korea'
     loc_end = 'South Korea OR South'
-    trigger = ["defect OR defected OR defection"]
+    trigger = "defect OR defected OR defection"
     type = event['event']['type']
     date = event['event']['date']
     temp = datetime.strptime(date, "%Y-%m-%d")
