@@ -15,8 +15,8 @@ def advance_search_dataset(q, f, num, event_id):  # 获取推文，放入MongoDB
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(q).setTweetType(f).setMaxTweets(num)
     tweets = got.manager.TweetManager.getTweets(tweetCriteria)
     for tweet in tweets:
-        if collection.find_one({'_id': tweet['id']}) is None:  # 查看推文是否已存在，若不存在则放入数据库
-            collection.insert_one({'_id': tweet['id'], 'tweet': tweet, 'event_id': event_id, 'f': f, 'q': q})
+        if collection.find_one({'id': tweet['id']}) is None:  # 查看推文是否已存在，若不存在则放入数据库
+            collection.insert_one({'id': tweet['id'], 'tweet': tweet, 'event_id': event_id, 'f': f, 'q': q})
 
 
 def run_dataset_task(message_data):
