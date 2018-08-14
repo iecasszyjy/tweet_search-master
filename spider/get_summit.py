@@ -21,12 +21,12 @@ def get_events():  # 事件较少，不使用解析网页方法，直接列出�
              '2018-06-12',
              '2018-06-19']
 
-    locs = ['Beijing',
-            'Peace House',
-            'Dalian',
-            'second',
+    locs = ['Beijing OR China',
+            'Peace House OR DMZ',
+            'Dalian OR China',
+            'second OR DMZ OR again',
             'Singapore',
-            'Beijing']
+            'Beijing OR China']
 
     partners = ['Xi',
               'Moon',
