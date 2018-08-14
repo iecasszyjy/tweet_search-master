@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 _, db, r = get_noau_config()  # 数据库配置
 
 def get_query_str(event):  # 获取Twitter查询信息
-    trigger = 'meet OR meeting OR summit'
+    # trigger = 'meet OR meeting OR summit'
     partner = event['event']['partner']
     loc = event['event']['loc']
     date = event['event']['date']
@@ -15,7 +15,7 @@ def get_query_str(event):  # 获取Twitter查询信息
     date_since = (temp - timedelta(days=7)).strftime('%Y-%m-%d')
     date_until = (temp + timedelta(days=21)).strftime('%Y-%m-%d')
     # 注意查询格式必须形如(xxx OR xxx) (xxx OR xxx) since:xxxx-xx-xx until:xxxx-xx-xx
-    return '(' + 'Kim' + ')' + ' ' + '(' + partner + ')' + ' ' + '(' + loc + ')' + ' ' + '(' + trigger + ')' +\
+    return '(' + 'Kim' + ')' + ' ' + '(' + partner + ')' + ' ' + '(' + loc + ')' +\
            ' ' + 'since:' + date_since + ' ' + 'until:' + date_until
 
 def get_task():
