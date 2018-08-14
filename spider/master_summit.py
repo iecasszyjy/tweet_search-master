@@ -13,9 +13,9 @@ def get_query_str(event):  # 获取Twitter查询信息
     date = event['event']['date']
     temp = datetime.strptime(date, "%Y-%m-%d")
     date_since = (temp - timedelta(days=7)).strftime('%Y-%m-%d')
-    date_until = (temp + timedelta(days=10)).strftime('%Y-%m-%d')
+    date_until = (temp + timedelta(days=21)).strftime('%Y-%m-%d')
     # 注意查询格式必须形如(xxx OR xxx) (xxx OR xxx) since:xxxx-xx-xx until:xxxx-xx-xx
-    return '(' + 'Kim' + ')' + '(' + partner + ')' + ' ' + '(' + loc + ')' + '(' + trigger + ')' +\
+    return '(' + 'Kim' + ')' + ' ' + '(' + partner + ')' + ' ' + '(' + loc + ')' + ' ' + '(' + trigger + ')' +\
            ' ' + 'since:' + date_since + ' ' + 'until:' + date_until
 
 def get_task():
