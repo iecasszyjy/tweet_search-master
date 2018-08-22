@@ -37,7 +37,7 @@ def run_nd_task(message_data):
             advance_search_nd(q, message_data['f'], num, sinceTimeStamp, untilTimeStamp)
         else:
             pool = Pool(processes=multiprocessing.cpu_count())
-            [pool.apply_async(advance_search_nd, (q, f, num, sinceTimeStamp, untilTimeStamp)) for f in message_data['f']]
+            [pool.apply(advance_search_nd, (q, f, num, sinceTimeStamp, untilTimeStamp)) for f in message_data['f']]
             pool.close()
             pool.join()
     except Exception, e:
