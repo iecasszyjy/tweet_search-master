@@ -16,7 +16,7 @@ _, db, r = get_noau_config()
 def get_query_str(loc, trigger):
     # start = (now - time_delta).strftime("%Y-%m-%d %H:%M:%S")
     # now_str = now.strftime("%Y-%m-%d %H:%M:%S")
-    return '(' + ' OR '.join(loc) + ')' + ' ' + '(' + ' OR '.join(trigger) + ')'
+    return '(' + loc + ')' + ' ' + '(' + ' OR '.join(trigger) + ')'
 
 
 def get_task():
@@ -25,13 +25,14 @@ def get_task():
     now = datetime.now()
     WAIT_TIME = 15
     while True:
-        q = get_query_str(locs, triggers)
-        message = {'q': q, 'f': ['&f=news', '', '&f=tweets'], 'num': -1,
-                   "sinceTimeStamp": (now - timedelta(minutes=WAIT_TIME)).strftime("%Y-%m-%d %H:%M:%S"),
-                   "untilTimeStamp": now.strftime("%Y-%m-%d %H:%M:%S")
-                   }
-        print(message)
-        r.rpush("task:online_nd", json.dumps(message))
+        for loc in locs:
+            q = get_query_str(loc, triggers)
+            message = {'q': q, 'f': ['&f=news', '', '&f=tweets'], 'num': -1,
+                       "sinceTimeStamp": (now - timedelta(minutes=WAIT_TIME)).strftime("%Y-%m-%d %H:%M:%S"),
+                       "untilTimeStamp": now.strftime("%Y-%m-%d %H:%M:%S")
+                       }
+            print(message)
+            r.rpush("task:online_nd", json.dumps(message))
         # for user in freq_users:
         #     message = {'q': 'from:' + user, 'f': '&f=tweets', 'num': -1,
         #                "sinceTimeStamp": (now - timedelta(minutes=WAIT_TIME)).strftime("%Y-%m-%d %H:%M:%S"),
