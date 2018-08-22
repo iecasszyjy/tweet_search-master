@@ -10,7 +10,7 @@ from Config import get_noau_config
 _, db, r = get_noau_config()
 
 # users = [i['tweet']['user']['screen_name'] for i in db.dataset_korea_m_1.find({}, {"tweet.user.screen_name": 1})]
-freq_users = [i[0] for i in Counter(users).most_common() if i[1] >= 5]
+# freq_users = [i[0] for i in Counter(users).most_common() if i[1] >= 5]
 
 
 def get_query_str(loc, trigger):
