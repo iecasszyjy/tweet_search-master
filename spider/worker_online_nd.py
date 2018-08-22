@@ -23,8 +23,8 @@ def advance_search_nd(q, f, num, s, u):
         s).setUntilTimeStamp(u).setMaxTweets(num)
     tweets = got.manager.TweetManager.getTweets(tweetCriteria)
     for tweet in tweets:
-        if collection.find_one({'_id': tweet['id']}) == None:
-            collection.insert_one({'_id': tweet['id'], 'tweet': tweet, 'f': f, 'q': q})
+        if collection.find_one({'id': tweet['id']}) == None:
+            collection.insert_one({'id': tweet['id'], 'tweet': tweet, 'f': f, 'q': q})
 
 
 def run_nd_task(message_data):
@@ -37,7 +37,7 @@ def run_nd_task(message_data):
             advance_search_nd(q, message_data['f'], num, sinceTimeStamp, untilTimeStamp)
         else:
             pool = Pool(processes=multiprocessing.cpu_count())
-            [pool.apply(advance_search_nd, (q, f, num, sinceTimeStamp, untilTimeStamp)) for f in message_data['f']]
+            [pool.apply_async(advance_search_nd, (q, f, num, sinceTimeStamp, untilTimeStamp)) for f in message_data['f']]
             pool.close()
             pool.join()
     except Exception, e:
