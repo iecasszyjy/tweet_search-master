@@ -18,6 +18,7 @@ _, db, r = get_noau_config()
 
 
 def advance_search_nd(q, f, num, s, u):
+    print 'nd'
     collection = db.nd
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(q).setTweetType(f).setSinceTimeStamp(
         s).setUntilTimeStamp(u).setMaxTweets(num)
@@ -34,8 +35,10 @@ def run_nd_task(message_data):
         sinceTimeStamp = datetime.strptime(message_data['sinceTimeStamp'], "%Y-%m-%d %H:%M:%S")
         untilTimeStamp = datetime.strptime(message_data['untilTimeStamp'], "%Y-%m-%d %H:%M:%S")
         if type(message_data['f']) != list:
+            print 'if'
             advance_search_nd(q, message_data['f'], num, sinceTimeStamp, untilTimeStamp)
         else:
+            print 'else'
             pool = Pool(processes=multiprocessing.cpu_count())
             [pool.apply(advance_search_nd, (q, f, num, sinceTimeStamp, untilTimeStamp)) for f in message_data['f']]
             pool.close()
