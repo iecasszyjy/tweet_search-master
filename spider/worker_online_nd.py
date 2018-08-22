@@ -19,10 +19,10 @@ _, db, r = get_noau_config()
 
 def advance_search_nd(q, f, num, s, u):
     collection = db.nd
-    collection.insert_one({'a':'a'})
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(q).setTweetType(f).setSinceTimeStamp(
         s).setUntilTimeStamp(u).setMaxTweets(num)
     tweets = got.manager.TweetManager.getTweets(tweetCriteria)
+    print 'tweets:',tweets
     for tweet in tweets:
         if collection.find_one({'id': tweet['id']}) == None:
             collection.insert_one({'id': tweet['id'], 'tweet': tweet, 'f': f, 'q': q})
