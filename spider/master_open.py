@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*
 # 获得爬取推文所需信息
 import json
-from Config_summit import get_noau_config
+from Config_open import get_noau_config
 from datetime import datetime, timedelta
 
 _, db, r = get_noau_config()  # 数据库配置
