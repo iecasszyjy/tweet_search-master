@@ -25,7 +25,7 @@ def get_task():
         message = {'q': q, 'f': ['&f=news', '', '&f=tweets'], 'num': 10000, 'event_id': event['_id']}
         print(message)
         # 把获取推文所需信息放入Redis数据库
-        r.rpush('summit', json.dumps(message))
+        r.rpush('open', json.dumps(message))
 
 if __name__ == '__main__':
     get_task()
