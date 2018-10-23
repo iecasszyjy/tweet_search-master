@@ -6,7 +6,7 @@ import json
 import multiprocessing
 from multiprocessing import Pool
 
-from Config_summit import get_noau_config
+from Config_open import get_noau_config
 
 got, db, r = get_noau_config()  # 文件和数据库配置
 
