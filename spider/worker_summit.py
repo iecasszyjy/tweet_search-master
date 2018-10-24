@@ -52,6 +52,6 @@ if __name__ == '__main__':
             else:
                 db.dataset_log.insert_one({'message': json.loads(queue), 'status': 0})
         time.sleep(1)
-        print 'craw_worker wait!'
+        print 'summit_worker wait!'
 
 
