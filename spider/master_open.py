@@ -26,8 +26,10 @@ def get_task():
         print(message)
         # 把获取推文所需信息放入Redis数据库
         r.rpush('open', json.dumps(message))
+        print("done!")
 
 if __name__ == '__main__':
     get_task()
+    print("all done!")
 
 
