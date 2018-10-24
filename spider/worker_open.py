@@ -39,19 +39,22 @@ def run_dataset_task(message_data):
 
 
 if __name__ == '__main__':
-    print 'craw_worker start!'
+    print('craw_worker start!')
     while True:
         # 从Redis数据库中取出获取推文所需信息
         queue = r.lpop('open')
+        print('queue start!')
         if queue:
-            print 'craw_worker process!'
+            print('craw_worker process!')
             craw = run_dataset_task(json.loads(queue))  # 获取推文
             if craw:
                 # 添加查询日志
                 db.dataset_log.insert_one({'message': json.loads(queue), 'status': 1})
+                print('add logs 1')
             else:
                 db.dataset_log.insert_one({'message': json.loads(queue), 'status': 0})
+                print('add logs 0')
         time.sleep(1)
-        print 'craw_worker wait!'
+        print('worker wait!')
 
 
