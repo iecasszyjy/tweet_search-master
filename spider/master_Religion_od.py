@@ -58,10 +58,10 @@ def get_query_str(event):
     date_since = (temp - timedelta(days=7)).strftime('%Y-%m-%d')
     date_until = (temp + timedelta(days=7)).strftime('%Y-%m-%d')
     # 注意查询格式必须形如(xxx OR xxx) (xxx OR xxx) since:xxxx-xx-xx until:xxxx-xx-xx
-#     return '(' + ' OR '.join(loc) + ')' + ' ' + '(' + ' OR '.join(trigger) + ')' + '(' + ' OR '.join(religion) + ')'\
-#            ' ' + 'since:' + date_since + ' ' + 'until:' + date_until
-    return '(' + ' OR '.join(trigger) + ')' + ' ' + '(' + ' OR '.join(religion) + ')' + ' ' + 'since:' + date_since + ' ' + 'until:' + date_until
-
+    return '(' + ' OR '.join(trigger) + ')' + ' ' + '(' + ' OR '.join(religion) + ')' + \
+           ' ' + 'since:' + date_since + ' ' + 'until:' + date_until
+    
+    
 def get_task():
     events = db.event_list.find({})
     for event in events:
