@@ -7,6 +7,16 @@ from datetime import datetime, timedelta
 _, db, r = get_noau_config()  # 数据库配置
 
 
+def get_year(Year):  # 获取起始年份
+    if len(Year) > 5:
+        Year_begin = '2013'
+        Year_end = '2014'
+    else:
+        Year_begin = Year
+        Year_end = Year
+    return Year_begin, Year_end
+
+
 def get_date(date):
     # 获取日期集合
     dates = date.split('\n')
@@ -49,27 +59,35 @@ def get_religions(religion):
 
 def get_query_str(event):
     # 获取Twitter查询信息
-    loc = get_location(event['event']['loc'])
+    # loc = get_location(event['event']['loc'])
     trigger = get_triggers(event['event']['trigger'])
-    religion = get_religions(event['event']['religion'])
-    date = event['event']['date']
-    date = date.strip()
-    temp = datetime.strptime(date, "%Y-%m-%d")
-    date_since = (temp - timedelta(days=7)).strftime('%Y-%m-%d')
-    date_until = (temp + timedelta(days=7)).strftime('%Y-%m-%d')
-    # 注意查询格式必须形如(xxx OR xxx) (xxx OR xxx) since:xxxx-xx-xx until:xxxx-xx-xx
-    return '(' + ' OR '.join(trigger) + ')' + ' ' + '(' + ' OR '.join(religion) + ')' + \
-           ' ' + 'since:' + date_since + ' ' + 'until:' + date_until
-    
-    
+    # religion = get_religions(event['event']['religion'])
+    # date_since = (temp - timedelta(days=7)).strftime('%Y-%m-%d')
+    # date_until = (temp + timedelta(days=7)).strftime('%Y-%m-%d')
+    # year_begin, year_end = get_year(event['event']['year'])
+    date_since = '2012-01-01'
+    date_until = '2018-10-28'
+    # 注意查询格式必须形如(xxx OR xxx) (xxx OR xxx) since:xxxx-xx-xx until:xxxx-xx-xx   # 暂时不加地点
+    # return '(' + ' OR '.join(loc) + ')' + ' ' + '(' + ' OR '.join(trigger) + ')' + '(' + ' OR '.join(religion) + ')'\
+    #        ' ' + 'since:' + date_since + ' ' + 'until:' + date_until
+    return '(' + ' OR '.join(trigger) + ')' + ' ' + 'since:' + date_since + ' ' + 'until:' + date_until
+
+
 def get_task():
+    # events = db.event_list.find({})
+    # for event in events:
+    #     q = get_query_str(event)
+    #     message = {'q': q, 'f': ['&f=news', '', '&f=tweets'], 'num': 10000, 'event_id': event['_id']}
+    #     print(message)
+    #     # 把获取推文所需信息放入Redis数据库
+    #     r.rpush('Religion_od', json.dumps(message))
+    # print('master_Religion_od done!')
     events = db.event_list.find({})
-    for event in events:
-        q = get_query_str(event)
-        message = {'q': q, 'f': ['&f=news', '', '&f=tweets'], 'num': 10000, 'event_id': event['_id']}
-        print(message)
-        # 把获取推文所需信息放入Redis数据库
-        r.rpush('Religion_od', json.dumps(message))
+    q = get_query_str(events[1])
+    message = {'q': q, 'f': ['&f=news', '', '&f=tweets'], 'num': 10000, 'event_id': event['_id']}
+    print(message)
+    # 把获取推文所需信息放入Redis数据库
+    r.rpush('Religion_od', json.dumps(message))
     print('master_Religion_od done!')
 
 
