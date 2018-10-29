@@ -74,20 +74,14 @@ def get_query_str(event):
 
 
 def get_task():
-    # events = db.event_list.find({})
-    # for event in events:
-    #     q = get_query_str(event)
-    #     message = {'q': q, 'f': ['&f=news', '', '&f=tweets'], 'num': 10000, 'event_id': event['_id']}
-    #     print(message)
-    #     # 把获取推文所需信息放入Redis数据库
-    #     r.rpush('Religion_od', json.dumps(message))
-    # print('master_Religion_od done!')
     events = db.event_list.find({})
-    q = get_query_str(events[1])
-    message = {'q': q, 'f': ['&f=news', '', '&f=tweets'], 'num': 10000, 'event_id': event['_id']}
-    print(message)
-    # 把获取推文所需信息放入Redis数据库
-    r.rpush('Religion_od', json.dumps(message))
+    for event in events:
+        q = get_query_str(event)
+        message = {'q': q, 'f': ['&f=news', '', '&f=tweets'], 'num': 10000, 'event_id': event['_id']}
+        print(message)
+        # 把获取推文所需信息放入Redis数据库
+        r.rpush('Religion_od', json.dumps(message))
+        pass
     print('master_Religion_od done!')
 
 
