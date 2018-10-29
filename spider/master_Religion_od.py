@@ -62,6 +62,9 @@ def get_query_str(event):
     # loc = get_location(event['event']['loc'])
     trigger = get_triggers(event['event']['trigger'])
     religion = get_religions(event['event']['religion'])
+    date = event['event']['date']
+    date = date.strip()
+    temp = datetime.strptime(date, "%Y-%m-%d")
     date_since = (temp - timedelta(days=7)).strftime('%Y-%m-%d')
     date_until = (temp + timedelta(days=7)).strftime('%Y-%m-%d')
     # year_begin, year_end = get_year(event['event']['year'])
