@@ -61,12 +61,12 @@ def get_query_str(event):
     # 获取Twitter查询信息
     # loc = get_location(event['event']['loc'])
     trigger = get_triggers(event['event']['trigger'])
-    # religion = get_religions(event['event']['religion'])
-    # date_since = (temp - timedelta(days=7)).strftime('%Y-%m-%d')
-    # date_until = (temp + timedelta(days=7)).strftime('%Y-%m-%d')
+    religion = get_religions(event['event']['religion'])
+    date_since = (temp - timedelta(days=7)).strftime('%Y-%m-%d')
+    date_until = (temp + timedelta(days=7)).strftime('%Y-%m-%d')
     # year_begin, year_end = get_year(event['event']['year'])
-    date_since = '2012-01-01'
-    date_until = '2018-10-28'
+    # date_since = '2012-01-01'
+    # date_until = '2018-10-28'
     # 注意查询格式必须形如(xxx OR xxx) (xxx OR xxx) since:xxxx-xx-xx until:xxxx-xx-xx   # 暂时不加地点
     # return '(' + ' OR '.join(loc) + ')' + ' ' + '(' + ' OR '.join(trigger) + ')' + '(' + ' OR '.join(religion) + ')'\
     #        ' ' + 'since:' + date_since + ' ' + 'until:' + date_until
@@ -81,8 +81,8 @@ def get_task():
         print(message)
         # 把获取推文所需信息放入Redis数据库
         r.rpush('Religion_od', json.dumps(message))
-        pass
     print('master_Religion_od done!')
+
 
 
 if __name__ == '__main__':
