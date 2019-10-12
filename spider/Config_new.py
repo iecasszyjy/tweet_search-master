@@ -14,7 +14,8 @@ def get_noau_config():
         import got3 as got
 
     # MongoDB数据库
-    client = pymongo.MongoClient(os.environ['MONGOHOST'], 27017, connect=False)
+    # client = pymongo.MongoClient(os.environ['MONGOHOST'], 27017, connect=False)
+    client = pymongo.MongoClient('3.220.111.222:27017')
     db = client.natural_disaster
     db.authenticate(name='aircas',password='aircas@2018')
 
