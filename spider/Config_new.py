@@ -16,6 +16,7 @@ def get_noau_config():
     # MongoDB数据库
     # client = pymongo.MongoClient(os.environ['MONGOHOST'], 27017, connect=False)
     client = pymongo.MongoClient('mongodb://3.220.111.222:27017/')
+    client.admin.authenticate("aircas", "aircas@2018", mechanism='SCRAM-SHA-1')
     # db = client.natural_disaster
     db = client['natural_disaster']
     # db.authenticate(name='aircas',password='aircas@2018')
