@@ -15,12 +15,14 @@ def get_noau_config():
 
     # MongoDB数据库
     # client = pymongo.MongoClient(os.environ['MONGOHOST'], 27017, connect=False)
-    client = pymongo.MongoClient('3.220.111.222:27017')
-    db = client.natural_disaster
-    db.authenticate(name='aircas',password='aircas@2018')
+    client = pymongo.MongoClient('mongodb://3.220.111.222:27017/')
+    # db = client.natural_disaster
+    db = client['natural_disaster']
+    # db.authenticate(name='aircas',password='aircas@2018')
 
     # Redis数据库
-    r = redis.StrictRedis(host=os.environ['REDISHOST'], port=6379, db=0)
+    # r = redis.StrictRedis(host=os.environ['REDISHOST'], port=6379, db=0)
+    r = redis.StrictRedis(host='3.220.111.222', port=6379, db=0)
 
     return got, db, r
 
