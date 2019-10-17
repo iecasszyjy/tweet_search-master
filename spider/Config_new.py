@@ -23,7 +23,7 @@ def get_noau_config():
 
     # Redis数据库
     # r = redis.StrictRedis(host=os.environ['REDISHOST'], port=6379, db=0)
-    r = redis.StrictRedis(host='3.220.111.222', port=6379, db=0)
+    r = redis.StrictRedis(host='127.0.0.1', port=6379, db=0)
 
     return got, db, r
 
