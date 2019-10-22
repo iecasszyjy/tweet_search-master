@@ -20,7 +20,7 @@ def get_task():
         q = '(' + locations + ')' + ' ' + '(' + triggers + ')' + ' ' + 'since:' + stime + ' ' + 'until:' + etime
         actionId = event['id']
         message = {'q': q, 'f': ['&f=news', '', '&f=tweets'], 'num': 50000, 'action_id': actionId}
-        print('推文查询语句组织完成 q: ' + q)
+        print(q)
         print(message)
     # # 把获取推文所需信息放入Redis数据库
     # r.rpush('2019HongKong_protest', json.dumps(message))
