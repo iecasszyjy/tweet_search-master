@@ -6,11 +6,10 @@ import json
 import multiprocessing
 from multiprocessing import Pool
 
-from Config_2019 import get_noau_config
-
-got, db = get_noau_config()  # 文件和数据库配置
+from Config_2019 import get_noau_config, getMongoClient, closeMongoClient
 
 def advance_search_dataset(q, f, num, actionId):  # 获取推文，放入MongoDB数据库
+    got, db = get_noau_config()  # 文件和数据库配置
     collection = db.dataset
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(q).setTweetType(f).setMaxTweets(num)
     tweets = got.manager.TweetManager.getTweets(tweetCriteria)
@@ -37,8 +36,11 @@ def run_dataset_task(actionId, q, f, num):
 
 if __name__ == '__main__':
     print '2019HongKong_protest craw_worker start!'
-    searchInfo = db.searchInfo
+    c = getMongoClient()
+    d = c['2019HongKong_protest']
+    searchInfo = d.searchInfo
     searchInfoResult = searchInfo.find()
+    closeMongoClient(c)
     for item in searchInfoResult:
         print '2019HongKong_protest craw_worker process!'
         actionId = item['id']
@@ -48,7 +50,7 @@ if __name__ == '__main__':
         craw = run_dataset_task(actionId, q, f, num)  # 获取推文
         if craw:
             # 添加查询日志
-            db.dataset_log.insert_one({'actionId': actionId, 'q': q, 'f': f, 'num': num, 'status': 1})
+            d.dataset_log.insert_one({'actionId': actionId, 'q': q, 'f': f, 'num': num, 'status': 1})
         else:
-            db.dataset_log.insert_one({'actionId': actionId, 'q': q, 'f': f, 'num': num, 'status': 0})
+            d.dataset_log.insert_one({'actionId': actionId, 'q': q, 'f': f, 'num': num, 'status': 0})
     print '2019HongKong_protest craw_worker finish!'
