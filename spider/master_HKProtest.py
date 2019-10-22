@@ -9,7 +9,10 @@ _, db = get_noau_config()  # 数据库配置
 def get_task():
     conditions = db.conditions.find({})
     stime, etime, locations, triggers = '','','',''
+    print('condition num:' + str(len(conditions)))
     for condition in conditions:
+        print(condition)
+        print(type(condition))
         if condition['stime']:
             stime = condition['stime']
         elif condition['etime']:
