@@ -7,7 +7,7 @@ from Config_2019 import get_noau_config
 _, db = get_noau_config()  # 数据库配置
 
 def get_task():
-    conditions = db.conditions.find({})
+    conditions = list(db.conditions.find())
     stime, etime, locations, triggers = '','','',''
     print('condition num:' + str(len(conditions)))
     for condition in conditions:
