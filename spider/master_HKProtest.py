@@ -13,13 +13,13 @@ def get_task():
     for condition in conditions:
         print(condition)
         print(type(condition))
-        if condition['stime']:
+        if 'stime' in condition.keys():
             stime = condition['stime']
-        elif condition['etime']:
+        elif 'etime' in condition.keys():
             etime = condition['etime']
-        elif condition['locations']:
+        elif 'locations' in condition.keys():
             locations = condition['locations']
-        elif condition['triggers']:
+        elif 'triggers' in condition.keys():
             triggers = condition['triggers']
     q = '(' + locations + ')' + ' ' + '(' + triggers + ')' + ' ' + 'since:' + stime + ' ' + 'until:' + etime
     actionId = hash(stime + etime + locations + triggers)
