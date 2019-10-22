@@ -48,7 +48,7 @@ if __name__ == '__main__':
         craw = run_dataset_task(actionId, q, f, num)  # 获取推文
         if craw:
             # 添加查询日志
-            db.dataset_log.insert_one({'action': json.loads(item), 'status': 1})
+            db.dataset_log.insert_one({'actionId': actionId, 'q': q, 'f': f, 'num': num, 'status': 1})
         else:
-            db.dataset_log.insert_one({'action': json.loads(item), 'status': 0})
+            db.dataset_log.insert_one({'actionId': actionId, 'q': q, 'f': f, 'num': num, 'status': 0})
     print '2019HongKong_protest craw_worker finish!'
