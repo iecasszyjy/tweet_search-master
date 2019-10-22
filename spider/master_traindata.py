@@ -32,8 +32,7 @@ def get_query_str(event):  # 获取Twitter查询信息
     date_since = year_begin + '-01-01'
     date_until = year_end + '-12-31'
     # 注意查询格式必须形如(xxx OR xxx) (xxx OR xxx) since:xxxx-xx-xx until:xxxx-xx-xx
-    print('(' + ' OR '.join(loc) + ')' + ' ' + '(' + ' OR '.join(trigger) + ')' +\
-           ' ' + 'since:' + date_since + ' ' + 'until:' + date_until)
+    print('natutal_disaster q : ' + '(' + ' OR '.join(loc) + ')' + ' ' + '(' + ' OR '.join(trigger) + ')' + ' ' + 'since:' + date_since + ' ' + 'until:' + date_until)
     return '(' + ' OR '.join(loc) + ')' + ' ' + '(' + ' OR '.join(trigger) + ')' +\
            ' ' + 'since:' + date_since + ' ' + 'until:' + date_until
 
