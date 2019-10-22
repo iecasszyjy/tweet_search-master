@@ -34,3 +34,11 @@ def getMongoClient():
 
 def closeMongoClient(client):
     client.close()
+    
+def getGot():
+    # got文件
+    if sys.version_info[0] < 3:
+        import got
+    else:
+        import got3 as got
+    return got
