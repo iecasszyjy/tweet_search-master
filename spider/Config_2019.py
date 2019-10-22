@@ -27,6 +27,10 @@ def get_noau_config():
 
     return got, db
 
-def getMongoInfo():
-    mongoInfo = {'ip': '3.220.111.222', 'port': 27017, 'collection': '2019HongKong_protest'}
-    return mongoInfo
+def getMongoClient():
+    client = pymongo.MongoClient('3.220.111.222', 27017, connect=False)
+    client.admin.authenticate("aircas", "aircas@2018", mechanism='SCRAM-SHA-1')
+    return client
+
+def closeMongoClient(client):
+    client.close()
