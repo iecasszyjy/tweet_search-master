@@ -9,11 +9,13 @@ from multiprocessing import Pool
 from Config_2019 import getGot, getMongoClient, closeMongoClient
 
 def advance_search_dataset(q, f, num, actionId, db):  # 获取推文，放入MongoDB数据库
-    got = getGot()  # 文件配置
-    collection = db.dataset
     print 'one search action start !'
+    got = getGot()  # 文件配置
     print q
+    collection = db.dataset
+    print f
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(q).setTweetType(f).setMaxTweets(num)
+    print num
     tweets = got.manager.TweetManager.getTweets(tweetCriteria)
     print 'tweets num:' + str(len(tweets))
     for tweet in tweets:
@@ -56,10 +58,10 @@ if __name__ == '__main__':
         f = item['f']
         num = item['num']
         craw = run_dataset_task(actionId, q, f, num, db)  # 获取推文
-        if craw:
+        # if craw:
             # 添加查询日志
-            db.dataset_log.insert_one({'actionId': actionId, 'q': q, 'f': f, 'num': num, 'status': 1})
-        else:
-            db.dataset_log.insert_one({'actionId': actionId, 'q': q, 'f': f, 'num': num, 'status': 0})
+            # db.dataset_log.insert_one({'actionId': actionId, 'q': q, 'f': f, 'num': num, 'status': 1})
+        # else:
+            # db.dataset_log.insert_one({'actionId': actionId, 'q': q, 'f': f, 'num': num, 'status': 0})
     closeMongoClient(c)
     print '2019HongKong_protest craw_worker finish!'
