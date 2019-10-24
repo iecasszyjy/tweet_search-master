@@ -11,18 +11,24 @@ from Config_2019 import getGot, getMongoClient, closeMongoClient
 def advance_search_dataset(q, f, num, actionId, db):  # 获取推文，放入MongoDB数据库
     got = getGot()  # 文件配置
     collection = db.dataset
+    print 'one search action start !'
+    print q
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(q).setTweetType(f).setMaxTweets(num)
     tweets = got.manager.TweetManager.getTweets(tweetCriteria)
+    print 'tweets num:' + str(len(tweets))
     for tweet in tweets:
         if collection.find_one({'id': tweet['id']}) is None:  # 查看推文是否已存在，若不存在则放入数据库
             collection.insert_one({'id': tweet['id'], 'tweet': tweet, 'actionId': actionId, 'f': f, 'q': q})
+            print 'store one tweet!'
 
 def run_dataset_task(actionId, q, f, num, db):
     try:
         if type(f) != list:
+            print 'get tweets once ----------------------------------------'
             advance_search_dataset(q, f, num, actionId, db)
         else:
             # 多进程获取推文
+            print 'get tweets multi ----------------------------------------'
             pool = Pool(processes=multiprocessing.cpu_count())
             # python官方建议：废弃apply，使用apply_async（使用apply在这里会出错）
             [pool.apply_async(advance_search_dataset, (q, fi, num, actionId, db)) for fi in f]
