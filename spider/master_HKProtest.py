@@ -4,11 +4,11 @@
 from Config_2019 import getMongoClient, closeMongoClient
 
 def get_task():
+    client = getMongoClient()
+    db = client['2019HongKong_protest']
     event_list = list(db.event_list.find())
     stime, etime, locations, triggers = '','','',''
     print('2019HongKong_protest event_list num:' + str(len(event_list)))
-    client = getMongoClient()
-    db = client['2019HongKong_protest']
     searchInfo = db.searchInfo
     for event in event_list:
         print(event)
