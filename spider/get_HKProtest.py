@@ -68,7 +68,7 @@ if __name__ == '__main__':
     # 事件查询条件放入MongoDB数据库 按地点名做事件循环
     requests = list()
     triggersStr = generateTrigger(triggers)
-    topicsStr = generateTopic(topicsStr)
+    topicsStr = generateTopic(topics)
     for loc in locations:
         eventId = hash(stime + etime + loc + triggersStr + topicsStr)
         requests.append(InsertOne({'id': eventId,
