@@ -8,8 +8,11 @@ import pymongo
 def get_noau_config():
     # got文件
     if sys.version_info[0] < 3:
+        # print('import got')
         import got
     else:
+        # print('import got333333333333333333333333333')
+        # import got
         import got3 as got
 
     # MongoDB数据库
