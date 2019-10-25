@@ -20,11 +20,11 @@ def get_task():
         topics = event['event']['topics']
         q = '(' + location + ')' + ' ' + triggers + ' ' + topics + ' ' + 'since:' + stime + ' ' + 'until:' + etime
         actionId = event['id']
-        message = {'q': q, 'f': ['&f=news', '', '&f=tweets'], 'num': 50000, 'action_id': actionId}
+        message = {'actionId': actionId, 'q': q, 'maxNum': 20000}
         print(message)
         # 把获取推文所需的特定格式信息存入mongo
-        if searchInfo.find_one({'id': actionId}) is None:
-            searchInfo.insert_one({'id': actionId, 'q': q, 'f': ['&f=news', '', '&f=tweets'], 'num': 50000})
+        if searchInfo.find_one({'actionId': actionId}) is None:
+            searchInfo.insert_one(message)
     print('推文查询语句存储到mongo/2019HongKong_protest/searchInfo完成')
     closeMongoClient(client)
 
